@@ -1,0 +1,59 @@
+server:
+  servlet:
+    context-path: /api
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/exam
+    username: postgres
+    password: ${POSTGRESQL_PASSWORD}
+    hikari:
+      driver-class-name: org.postgresql.Driver
+      minimum-idle: 5
+      maximum-pool-size: 12
+      idle-timeout: 300000
+      auto-commit: false
+  jpa:
+    open-in-view: false
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  mail:
+    password: ${MAIL_PASSWORD}
+    host: ${MAIL_HOST}
+    port: 465
+    username: ${MAIL_USERNAME}
+    properties:
+      "mail.smtp.starttls.required": true
+      "mail.smtp.starttls.enable": true
+      "mail.smtp.auth": true
+    protocol: smtps
+  data:
+    redis:
+      port: 6379
+      timeout: 600ms
+      database: 0
+      host: localhost
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+
+jwt:
+  id: ${JWT_ID}
+  tokenHead: "Bearer "
+  tokenHeader: Authorization
+  expiration: 7200
+  secret: ${JWT_SECRET}
+  white: /api/login, /api/auth/login, /api/auth/register, /api/auth/verify, /api/auth/resetPassword, /api/auth/verifyResetPassword, /api/auth/resend
+
+snowFlake:
+  machine:
+    id: 1
+  datacenter:
+    id: 1
+
+openai:
+  security:
+    key: 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
