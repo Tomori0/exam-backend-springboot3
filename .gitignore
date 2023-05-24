@@ -12,7 +12,6 @@
 
 # Gradle files
 .gradle
-gradle
 
 # Build files
 out
