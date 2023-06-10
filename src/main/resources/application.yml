@@ -3,7 +3,7 @@ server:
     context-path: /api
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/exam
+    url: jdbc:postgresql://localhost:5432/9echat
     username: postgres
     password: ${POSTGRESQL_PASSWORD}
     hikari:
@@ -12,6 +12,7 @@ spring:
       maximum-pool-size: 12
       idle-timeout: 300000
       auto-commit: false
+      schema: public
   jpa:
     open-in-view: false
     show-sql: true
