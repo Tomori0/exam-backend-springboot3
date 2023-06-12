@@ -50,7 +50,7 @@ public class AIChatServiceImpl implements AIChatService {
      * 生成token,chatId
      * @param email 邮箱
      * @return token,chatId
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public Pair<String, String> generateTokenAndId(String email) throws BusinessException {
@@ -75,7 +75,7 @@ public class AIChatServiceImpl implements AIChatService {
      * @param chatRequest chat请求
      * @param userId 用户id
      * @return 角色,内容
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public Map<String, String> withChatGPT(String email, ChatRequest chatRequest, String userId) throws BusinessException {

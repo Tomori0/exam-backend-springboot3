@@ -29,6 +29,7 @@ public class EmailServiceImpl implements EmailService {
      * @param subject 邮件主题
      * @param email 邮箱
      * @param verifyString 验证码
+     * @throws BusinessException 业务异常
      */
     @Async("taskExecutor")
     @Override

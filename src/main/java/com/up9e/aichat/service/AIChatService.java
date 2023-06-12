@@ -12,7 +12,7 @@ public interface AIChatService {
      * 生成token,chatId
      * @param email 邮箱
      * @return token,chatId
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     Pair<String, String> generateTokenAndId(String email) throws BusinessException;
 
@@ -22,7 +22,7 @@ public interface AIChatService {
      * @param chatRequest chat请求
      * @param userId 用户id
      * @return 角色,内容
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     Map<String, String> withChatGPT(String email, ChatRequest chatRequest, String userId) throws BusinessException;
 }

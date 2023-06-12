@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -51,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
      * 注册前置操作
      * @param user 用户信息User
      * @return token,验证码
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public Pair<String, String> register(User user) throws BusinessException {
@@ -85,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
      * 重置密码前置操作
      * @param user 用户信息User
      * @return token,验证码
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public Pair<String, String> resetPassword(User user) throws BusinessException {
@@ -127,7 +128,7 @@ public class AuthServiceImpl implements AuthService {
      * @param token token
      * @param verifyCode 验证码
      * @param keySuffix 后缀
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public void verify(String token, String verifyCode, String keySuffix) throws BusinessException {
@@ -145,7 +146,7 @@ public class AuthServiceImpl implements AuthService {
     /**
      * 注册用户
      * @param email 邮箱
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public void registerProcess(String email) throws BusinessException {
@@ -177,7 +178,7 @@ public class AuthServiceImpl implements AuthService {
      * 重置密码
      * @param email 邮箱
      * @param password 密码
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public void verifyResetPasswordProcess(String email, String password) throws BusinessException {
@@ -200,7 +201,7 @@ public class AuthServiceImpl implements AuthService {
      * @param userId 用户id
      * @param level 会员等级
      * @param plusMonth 月数
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public void charge(String type, Integer userId, Integer level, Integer plusMonth) throws BusinessException{
@@ -228,11 +229,11 @@ public class AuthServiceImpl implements AuthService {
      * @param userId 用户id
      * @param plusMonth 月数
      * @return 差价
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Override
     public BigDecimal upgrade(Integer userId, Integer plusMonth) throws BusinessException{
-        BigDecimal priceDiff = new BigDecimal(0);
+        BigDecimal priceDiff = BigDecimal.ZERO;
         AIChatUserLevel findAIChatUserLevel = new AIChatUserLevel();
         findAIChatUserLevel.setUserId(userId);
         findAIChatUserLevel.setDeleteFlg(Constant.STR_DELETEFLG_0);
@@ -257,14 +258,16 @@ public class AuthServiceImpl implements AuthService {
             if (aiChatPrices.isEmpty()){
                 throw new BusinessException(ErrorEnum.ERROR_FIND_CHAT_PRICE);
             }
-            for (int i = 0; i < aiChatPrices.size(); i++){
-                if (aiChatPrices.get(i).getLevel() == Constant.INTEGER_CHAT_LEVEL_FREE){
-                    priceLevel1 = aiChatPrices.get(i).getPrice();
+            for (AIChatPrice aiChatPrice :aiChatPrices){
+                if (aiChatPrice.getLevel().equals(Constant.INTEGER_CHAT_LEVEL_FREE)){
+                    priceLevel1 = aiChatPrice.getPrice();
                 } else {
-                    priceLevel2 = aiChatPrices.get(i).getPrice();
+                    priceLevel2 = aiChatPrice.getPrice();
                 }
             }
-            priceDiff = (priceLevel2.subtract(priceLevel1)).divide(BigDecimal.valueOf(Constant.INTEGER_CHAT_DAY_OF_ONE_MONTH)).multiply(BigDecimal.valueOf(dayDiff));
+            priceDiff = (priceLevel2.subtract(priceLevel1))
+                    .divide(BigDecimal.valueOf(Constant.INTEGER_CHAT_DAY_OF_ONE_MONTH), RoundingMode.HALF_UP)
+                    .multiply(BigDecimal.valueOf(dayDiff));
         }
         return priceDiff;
     }

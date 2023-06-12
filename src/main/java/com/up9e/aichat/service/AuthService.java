@@ -14,7 +14,7 @@ public interface AuthService {
      * 注册前置操作
      * @param user 用户信息User
      * @return token,验证码
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     Pair<String, String> register(User user) throws BusinessException;
 
@@ -22,7 +22,7 @@ public interface AuthService {
      * 重置密码前置操作
      * @param user 用户信息User
      * @return token,验证码
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     Pair<String, String> resetPassword(User user) throws BusinessException;
 
@@ -39,14 +39,14 @@ public interface AuthService {
      * @param token token
      * @param verifyCode 验证码
      * @param keySuffix 后缀
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     void verify(String token, String verifyCode, String keySuffix) throws BusinessException;
 
     /**
      * 注册用户
      * @param email 邮箱
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     void registerProcess(String email) throws BusinessException;
@@ -55,7 +55,7 @@ public interface AuthService {
      * 重置密码
      * @param email 邮箱
      * @param password 密码
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     void verifyResetPasswordProcess(String email, String password) throws BusinessException;
 
@@ -65,7 +65,7 @@ public interface AuthService {
      * @param userId 用户id
      * @param level 会员等级
      * @param plusMonth 月数
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     void charge(String type, Integer userId, Integer level, Integer plusMonth) throws BusinessException;
 
@@ -74,7 +74,7 @@ public interface AuthService {
      * @param userId 用户id
      * @param plusMonth 月数
      * @return 差价
-     * @throws BusinessException
+     * @throws BusinessException 业务异常
      */
     BigDecimal upgrade(Integer userId, Integer plusMonth) throws BusinessException;
 }
