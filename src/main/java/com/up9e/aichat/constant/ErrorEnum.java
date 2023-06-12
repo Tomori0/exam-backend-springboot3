@@ -27,7 +27,6 @@ public enum ErrorEnum {
     public Integer getErrorCode() {
         return errorCode;
     }
-
     public String getErrorMessage() {
         return errorMessage;
     }

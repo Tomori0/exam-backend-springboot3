@@ -26,7 +26,6 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
-
     private final EmailService emailService;
 
     public AuthController(AuthService authService, EmailService emailService) {
@@ -88,7 +87,7 @@ public class AuthController {
         } else {
             throw new BusinessException(ErrorEnum.ERROR_TYPE);
         }
-        String verifyToken = authService.resend(resendToken.token(), resendToken.type());
+        String verifyToken = authService.generateVerifyCode(resendToken.token(), resendToken.type());
         emailService.sendMail(subject, resendToken.email(), verifyToken);
         return new ResponseApi<>("验证码发送成功");
     }

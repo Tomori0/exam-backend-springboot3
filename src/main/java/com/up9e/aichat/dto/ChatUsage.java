@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChatUsage {
+
     private Integer promptTokens;
     private Integer completionTokens;
     private Integer totalTokens;

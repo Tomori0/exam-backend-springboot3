@@ -14,5 +14,4 @@ public class ExceptionAdvice {
         ErrorEnum errorEnum = e.getErrorEnum();
         return new ResponseApi<>(errorEnum.getErrorCode(), errorEnum.getErrorMessage());
     }
-
 }

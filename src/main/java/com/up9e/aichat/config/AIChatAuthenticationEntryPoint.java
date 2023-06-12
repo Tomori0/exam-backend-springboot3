@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import java.io.IOException;
 
 public class AIChatAuthenticationEntryPoint implements org.springframework.security.web.AuthenticationEntryPoint {
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setCharacterEncoding("utf-8");

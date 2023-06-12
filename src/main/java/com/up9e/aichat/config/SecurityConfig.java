@@ -17,13 +17,9 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig {
 
     private final AIChatAuthenticationProvider aiChatAuthenticationProvider;
-
     private final UserDetailsServiceImpl userDetailsService;
-
     private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
-
     private final AIChatAuthenticationSuccessHandler aiChatAuthenticationSuccessHandler;
-
     private final AIChatAuthenticationFailureHandler aiChatAuthenticationFailureHandler;
 
     public SecurityConfig(AIChatAuthenticationProvider aiChatAuthenticationProvider,

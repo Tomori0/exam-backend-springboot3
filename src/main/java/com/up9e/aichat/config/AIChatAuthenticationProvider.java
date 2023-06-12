@@ -1,15 +1,12 @@
 package com.up9e.aichat.config;
 
 import com.up9e.aichat.dao.UserDao;
-import com.up9e.aichat.entity.User;
 import com.up9e.aichat.global.UserDetails;
 import com.up9e.aichat.service.impl.UserDetailsServiceImpl;
-import org.springframework.data.domain.Example;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,14 +15,10 @@ import java.util.Optional;
 @Component
 public class AIChatAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider {
 
-    private final UserDao userDao;
-
     private final PasswordEncoder passwordEncoder;
-
     private final UserDetailsServiceImpl userDetailsServiceImpl;
 
-    public AIChatAuthenticationProvider(UserDao userDao, PasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsServiceImpl) {
-        this.userDao = userDao;
+    public AIChatAuthenticationProvider(PasswordEncoder passwordEncoder, UserDetailsServiceImpl userDetailsServiceImpl) {
         this.passwordEncoder = passwordEncoder;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
     }

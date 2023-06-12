@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ChatCompletion {
+
     private String id;
     private String object;
     private Long created;

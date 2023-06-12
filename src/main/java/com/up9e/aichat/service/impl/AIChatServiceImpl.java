@@ -30,17 +30,13 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
 @Service
 @Log4j2
 public class AIChatServiceImpl implements AIChatService {
 
     private final RestTemplate restTemplate = new RestTemplate();
-
     private final AIChatInfoDao aiChatInfoDao;
-
     private final AIChatHistoryDao aiChatHistoryDao;
-
     private final String openAIKey;
 
     public AIChatServiceImpl(@Value("${openai.security.key}") String openAIKey,
@@ -50,6 +46,12 @@ public class AIChatServiceImpl implements AIChatService {
         this.aiChatHistoryDao = aiChatHistoryDao;
     }
 
+    /**
+     * 生成token,chatId
+     * @param email 邮箱
+     * @return token,chatId
+     * @throws BusinessException
+     */
     @Override
     public Pair<String, String> generateTokenAndId(String email) throws BusinessException {
         String chatId = SnowFlakeUtils.nextId();
@@ -67,6 +69,14 @@ public class AIChatServiceImpl implements AIChatService {
         return Pair.of(token, chatId);
     }
 
+    /**
+     * ChatGPT交互
+     * @param email 邮箱
+     * @param chatRequest chat请求
+     * @param userId 用户id
+     * @return 角色,内容
+     * @throws BusinessException
+     */
     @Override
     public Map<String, String> withChatGPT(String email, ChatRequest chatRequest, String userId) throws BusinessException {
         String tokenKey = email + Constant.STR_AI + chatRequest.getChatId();

@@ -1,5 +1,7 @@
 package com.up9e.aichat.service.impl;
 
+import com.up9e.aichat.constant.ErrorEnum;
+import com.up9e.aichat.global.BusinessException;
 import com.up9e.aichat.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender javaMailSender;
-
     private final String from;
 
     public EmailServiceImpl(JavaMailSender javaMailSender, @Value("${spring.mail.username}") String from) {
@@ -23,9 +24,15 @@ public class EmailServiceImpl implements EmailService {
         this.from = from;
     }
 
+    /**
+     * 发送邮件
+     * @param subject 邮件主题
+     * @param email 邮箱
+     * @param verifyString 验证码
+     */
     @Async("taskExecutor")
     @Override
-    public void sendMail(String subject, String email, String verifyString) {
+    public void sendMail(String subject, String email, String verifyString) throws BusinessException{
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
@@ -35,6 +42,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setText("您的验证码为：" + verifyString, true);
         } catch (MessagingException e) {
             log.error(e.getMessage(), e);
+            throw new BusinessException(ErrorEnum.ERROR_SEND_MAIL);
         }
         javaMailSender.send(helper.getMimeMessage());
     }

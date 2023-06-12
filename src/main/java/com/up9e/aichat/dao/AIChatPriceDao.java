@@ -10,5 +10,4 @@ import java.util.List;
 public interface AIChatPriceDao extends JpaRepository<AIChatPrice, String> {
 
     List<AIChatPrice> findAllByMonth(Integer month);
-
 }

@@ -8,6 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class ChatUserLevel {
+
     private Integer userId;
     private Integer level;
     private Integer month;
